@@ -26,5 +26,11 @@ WORKDIR ${APP_HOME}/
 # COPY the code and everything to container
 COPY . ./
 
+# Install Jupyter
+RUN pip install jupyter
+
 # Install all libraries with requirements file
-RUN pip install -r requirements.txt 
+RUN pip install -r requirements.txt
+
+# RUN the jupyter notebook
+ENTRYPOINT [ "jupyter", "notebook", "--allow-root" ]
