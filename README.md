@@ -3,6 +3,8 @@
 - Further development:
   * Deploying on cloud provider
   * Handling Requests via Kubernetes pods
+### PYDAP, Data Access GES DISC using python
+source: (https://disc.gsfc.nasa.gov/information/howto?title=How%20to%20Access%20GES%20DISC%20Data%20Using%20Python)
 
 ## Reading the data:
 ![options](https://github.com/sagarlimbu0/oco2-oco3_data_access_visualization/blob/main/screenshots/data_access_visualization.jpeg)
