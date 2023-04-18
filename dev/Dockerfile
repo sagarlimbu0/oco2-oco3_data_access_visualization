@@ -3,6 +3,16 @@
 
 FROM jupyter/datascience-notebook
 
+FROM python:3.10-slim-buster AS build
+RUN apt-get -y update \
+	&& apt-get install -y \
+	curl \
+	build-essential \
+	libffi-dev \
+	&& rm -rf /var/lib/apt/lists/*
+
+FROM jupyter/minimal-notebook
+
 LABEL author="sagar limbu"
 
 COPY . ./
