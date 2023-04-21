@@ -1,9 +1,12 @@
 #ARG BASE_CONTAINER=jupyter/minimal-notebook
 #FROM $BASE_CONTAINER
+# LABEL author="sagar limbu"
+ARG APP_DIR=/app
 
-FROM jupyter/datascience-notebook
+FROM python:3.10-slim-buster as build
 
-FROM python:3.10-slim-buster AS build
+ARG APP_DIR
+
 RUN apt-get -y update \
 	&& apt-get install -y \
 	curl \
@@ -11,12 +14,29 @@ RUN apt-get -y update \
 	libffi-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-FROM jupyter/minimal-notebook
+## jupyter notebook
+#FROM jupyter/minimal-notebook
 
-LABEL author="sagar limbu"
-
+WORKDIR ${APP_DIR}
 COPY . ./
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+	jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
-CMD ["jupyter", "notebook","--ip=0.0.0.0", "--port=8888", "--no-browser","--allow-root"]
+## add password to this notebook
+ARG password= oco_visual
+
+## generate config file for jupyter notebook
+## Store password credentials
+RUN jupyter notebook --generate-config
+
+RUN sleep 9
+RUN echo "c.NotebookApp.password = u'"${password}"'" >> /root/.jupyter/jupyter_notebook_config.py 
+
+
+# /root/.jupyter/jupyter_notebook_config.py 
+# /root/.jupyter/jupyter_notebook_config.py
+
+
+CMD ["jupyter", "notebook","--ip=0.0.0.0","--port=8888", "--no-browser", "--allow-root"]
+#"--NotebookApp.token = u''", "--NotebookApp.password = u''"]
