@@ -31,7 +31,8 @@ ARG password="oco_visual"
 RUN jupyter notebook --generate-config
 
 RUN sleep 9
-RUN echo "c.NotebookApp.password = u'"${password}"'" >> /root/.jupyter/jupyter_notebook_config.py 
+# RUN echo "c.NotebookApp.password = u'"${password}"'" >> /root/.jupyter/jupyter_notebook_config.py 
+RUN echo "c.NotebookApp.password = "${password}"" >> /root/.jupyter/jupyter_notebook_config.py 
 
 
 # /root/.jupyter/jupyter_notebook_config.py 
