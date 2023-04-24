@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt && \
 	jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
 ## add password to this notebook
-ARG password= oco_visual
+ARG password="oco_visual"
 
 ## generate config file for jupyter notebook
 ## Store password credentials
